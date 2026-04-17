@@ -75,8 +75,8 @@ services:
       - PGPOOL_PARAMS_NUM_INIT_CHILDREN=32
       - PGPOOL_PARAMS_MAX_POOL=4
       
-      # === FAILOVER (обязательно для авто-переключения) ===
-      - PGPOOL_PARAMS_FAILOVER_COMMAND=/etc/pgpool2/failover.sh %d %H %m %M %P
+      # === FAILOVER: путь внутри образа + плейсхолдеры Pgpool-II 4.x (%H/%r = хост/порт нового main)
+      - PGPOOL_PARAMS_FAILOVER_COMMAND=/usr/local/bin/pgpool-scripts/failover.sh %d %H %r %m
       
       # === ЛОГИРОВАНИЕ ===
       - PGPOOL_PARAMS_LOG_CONNECTIONS=on
