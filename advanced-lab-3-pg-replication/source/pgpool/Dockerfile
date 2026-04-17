@@ -1,17 +1,15 @@
-FROM pgpool/pgpool:4.4.3
+FROM pgpool/pgpool:latest
 
 USER root
 
 # Копируем конфиг и скрипты
-COPY pgpool.conf /etc/pgpool2/pgpool.conf
-COPY scripts/ /usr/local/bin/pgpool-scripts/
+COPY --chown=pgpool:pgpool scripts/ /usr/local/bin/pgpool-scripts/
 
 # ОДНИМ RUN делаем всё: права, владельца, конвертация CRLF
-RUN chmod +x /usr/local/bin/pgpool-scripts/*.sh && \
-  chown -R pgpool:pgpool /usr/local/bin/pgpool-scripts
+RUN chmod +x /usr/local/bin/pgpool-scripts/*.sh
 
 # Переключаемся на пользователя pgpool для безопасности
-USER pgpool
+USER postgres
 
 # Команда запуска
 CMD ["pgpool", "-n"]
